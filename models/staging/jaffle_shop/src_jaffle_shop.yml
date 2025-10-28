@@ -2,23 +2,36 @@ version: 2
 
 sources:
     - name: jaffle_shop
-      description: A clone of a Postgres application database.
-      database: raw
+      database: dbtdevelopment
+      schema: jaffle_shop
       tables:
         - name: customers
-          description: Raw customers data.
+          description: un cliente por registro
           columns:
             - name: id
-              description: Primary key for customers
+              description: es la clave primaria
               tests:
                 - unique
                 - not_null
-
+            - name: FIRST_NAME
+              description: es el nombre del cliente
+              tests:
+                - not_null
+            - name: LAST_NAME
+              description: es el apellido del cliente
+              tests:
+                - not_null
         - name: orders
-          description: Raw orders data.
+          description: una orden por registro
           columns:
-            - name: id
-              description: Primary key for orders.
+            - name: ID
+              description: es la clave primaria
               tests:
                 - unique
                 - not_null
+            - name: USER_ID
+              description: es la clave foránea de la tabla de clientes 
+            - name: ORDER_DATE
+              description: es la fecha en la que se realizó la orden
+            - name: STATUS
+              description: "{{doc('order_status')}}"
