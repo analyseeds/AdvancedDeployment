@@ -17,7 +17,7 @@ final as (
        {% endif -%}
  
        {%- endfor %}
-   from {{ ref('stg_payments') }}
+   from payments
    group by 1
 )
  
