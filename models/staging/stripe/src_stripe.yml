@@ -2,6 +2,28 @@ version: 2
 
 sources:
     - name: stripe
-      database: raw
+      database: dbtdevelopment
+      schema: stripe
       tables:
-        - name: payment
+        - name: payments
+          description: un pago por registro
+          columns:
+            - name: ID
+              description: es la clave primaria
+              tests:
+                - unique
+                - not_null
+            - name: ORDERID
+              description: es la clave foránea de la tabla de órdenes
+            - name: status
+              description: "{{doc('payment_status')}}"
+            - name: amount
+              description: es el monto del pago
+              tests:
+                - is_positive
+            - name: created
+              description: es la fecha de creación del registro
+              tests:
+                - is_not_null
+    
+            

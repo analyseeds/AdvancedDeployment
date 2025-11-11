@@ -1,0 +1,70 @@
+version: 2
+
+models:
+  - name: customer_orders
+    description: un cliente por registro
+    columns:
+      - name: customer_id
+        description: es la clave primaria de la tabla
+        tests:
+          - unique
+          - not_null
+      - name: frist_order_date
+        description: es la fecha de la primera orden
+      - name: last_order_date
+        description: es la fecha de la última orden
+      - name: number_of_orders
+        tests:
+          - not_null
+          - is_positive
+      - name: total_amount
+        description: es el monto total pagado por el cliente
+        tests:
+          - is_positive
+  - name: order_payments
+    description: una orden por registro
+    columns:
+      - name: order_id
+        description: es la clave primaria
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: es la clave foránea de la tabla de clientes
+        tests:
+          - relationships:
+              field: customer_id
+              to: ref('stg_customers')
+      - name: order_date
+        description: es la fecha en la que se realizó la orden
+        tests:
+          - not_null
+      - name: total_amount
+        description: es el monto total del pago de la orden
+        tests:
+          - is_positive
+          - not_null
+  - name: int_orders_pivoted
+    description: es una tabla de órdenes con montos pivotados
+    columns:
+      - name: order_id
+        description: es la clave primaria 
+        tests:
+          - unique
+          - not_null
+      - name: bank_transfer_amount
+        description: es la columna pivotada con el monto del pago de transferencias bancarias
+        tests:
+          - is_positive
+      - name: credit_card_amount
+        description: es la columna pivotada con el monto del pago de transferencias bancarias
+        tests:
+          - is_positive
+      - name: coupon_amount
+        description: es la columna pivotada con el monto del pago de transferencias bancarias
+        tests:
+          - is_positive
+      - name: gift_card_amount
+        description: es la columna pivotada con el monto del pago de transferencias bancarias
+        tests:
+          - is_positive

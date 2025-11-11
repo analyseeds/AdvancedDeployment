@@ -1,11 +1,16 @@
-select
-    id as payment_id,
-    orderid as order_id,
-    paymentmethod as payment_method,
-    status,
+with
 
-    -- amount is stored in cents, convert it to dollars
-    {{ cents_to_dollars('amount', 4) }} as amount,
-    created as created_at
+payments as (
 
-from {{ source('stripe','payment') }}
+    select
+        ID as payment_id,
+        ORDERID as order_id,
+        PAYMENTMETHOD as payment_method,
+        status as payment_status,
+        amount as payment_amount,
+        created
+    from 
+        {{source('stripe','payments')}}
+)
+
+select * from payments
