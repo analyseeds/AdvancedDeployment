@@ -1,3 +1,5 @@
+-- esto es una pequeña prueba
+
 with
 
 customers as ( 
